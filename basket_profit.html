@@ -1,0 +1,41 @@
+<div class="form-container">
+    <h1>คำนวณกำไรสินค้าแบบตะร้า</h1>
+    <label for="productName">ชื่อสินค้า:</label>
+    <input type="text" id="productName" placeholder="เช่น ไซมัสจีน" required>
+    
+    <label for="brandName">ยี่ห้อ:</label>
+    <input type="text" id="brandName" placeholder="เช่น ตราปลา ก.เขียว">
+    
+    <label for="basketPrice">ราคาต่อตะร้า (บาท):</label>
+    <input type="number" id="basketPrice" placeholder="เช่น 650" required>
+    
+    <label for="piecesPerBasket">จำนวนช่อต่อตะร้า:</label>
+    <input type="number" id="piecesPerBasket" placeholder="เช่น 4" required>
+    
+    <label for="desiredProfitPercentage">กำไรที่ต้องการ (%):</label>
+    <input type="number" id="desiredProfitPercentage" placeholder="เช่น 30" required>
+    
+    <button onclick="calculateBasketProfit()">คำนวณกำไรต่อช่อ</button>
+</div>
+<div class="table-container">
+    <h1>ผลลัพธ์การคำนวณ</h1>
+    <table id="resultTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>ชื่อสินค้า</th>
+                <th>ยี่ห้อ</th>
+                <th>ราคาต่อตะร้า</th>
+                <th>จำนวนช่อต่อตะร้า</th>
+                <th>ต้นทุนต่อช่อ</th>
+                <th>ราคาขายต่อช่อ</th>
+                <th>กำไร (%)</th>
+            </tr>
+        </thead>
+        <tbody id="resultBody"></tbody>
+    </table>
+</div>
+<a href="profit.html">กลับไปหน้าคำนวณกำไรสินค้า</a>
+
+
+<script src="profitscript.js"></script>
+

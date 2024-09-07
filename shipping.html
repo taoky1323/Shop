@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องมือคำนวณค่าส่งสินค้า</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Mali', sans-serif;
+            background-color: #e0f7fa; /* สีฟ้าพาสเทล */
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            font-size: 24px;
+            color: #0277bd; /* สีฟ้าเข้ม */
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus {
+            border-color: #4fc3f7;
+        }
+        .calculate-btn {
+            width: 90%;
+            padding: 12px;
+            background-color: #ffb74d; /* สีส้มพาสเทล */
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+        }
+        .calculate-btn:hover {
+            background-color: #ffa726;
+        }
+        .result-output {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            color: #0277bd; /* สีฟ้าเข้ม */
+        }
+        .info-section-small {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff3e0; /* สีส้มอ่อน */
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        .info-section-small details summary {
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #e65100; /* สีส้มเข้ม */
+        }
+        .info-card {
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ffcc80; /* สีส้มอ่อน */
+            border-radius: 10px;
+            background-color: #ffe0b2; /* สีส้มพาสเทล */
+        }
+        .info-card h3 {
+            font-size: 18px;
+            color: #bf360c; /* สีส้มเข้ม */
+            margin-bottom: 10px;
+        }
+        .info-card ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .info-card ul li {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #4e342e; /* สีน้ำตาล */
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="container">
+            <h2>เครื่องมือคำนวณค่าส่งสินค้า</h2>
+            <form id="shipping-form">
+                <label for="serviceType">ประเภทบริการ:</label>
+                <select id="serviceType" name="serviceType" onchange="toggleForm()" required>
+                    <option value="">เลือกประเภทบริการ</option>
+                    <option value="interCool">Inter Cool (ควบคุมอุณหภูมิ)</option>
+                    <option value="fruitDelivery">Fruit Delivery (ไม่ควบคุมอุณหภูมิ)</option>
+                    <option value="makesend">Makesend</option>
+                </select>
+
+                <!-- Inter Cool Form -->
+                <div id="interCoolForm" style="display:none;">
+                    <label for="boxSize">ขนาดกล่อง:</label>
+                    <select id="boxSize" name="boxSize">
+                        <option value="S1">S1 (≤ 5 กก. / ≤ 7,500 ลบ.ซม.)</option>
+                        <option value="S2">S2 (≤ 10 กก. / ≤ 15,000 ลบ.ซม.)</option>
+                        <option value="A1">A1 (≤ 15 กก. / ≤ 25,000 ลบ.ซม.)</option>
+                        <option value="A2">A2 (≤ 20 กก. / ≤ 35,000 ลบ.ซม.)</option>
+                        <option value="B1">B1 (≤ 25 กก. / ≤ 50,000 ลบ.ซม.)</option>
+                        <option value="B2">B2 (≤ 30 กก. / ≤ 65,000 ลบ.ซม.)</option>
+                    </select>
+
+                    <label for="destination">ปลายทาง:</label>
+                    <select id="destination" name="destination">
+                        <option value="bangkok">กรุงเทพฯ และปริมณฑล (1 วัน)</option>
+                        <option value="central">กรุงเทพฯ-ปริมณฑล ↔ ภาคกลาง (1-2 วัน)</option>
+                        <option value="crossRegion">ข้ามภาค (ยกเว้นภาคกลาง) (2 วัน)</option>
+                    </select>
+                </div>
+
+                <!-- Fruit Delivery Form -->
+                <div id="fruitDeliveryForm" style="display:none;">
+                    <label for="weight">น้ำหนัก (กก.):</label>
+                    <input type="number" id="weight" name="weight" min="3" max="30" step="1" placeholder="ใส่น้ำหนักระหว่าง 3-30 กก.">
+                </div>
+
+                <!-- Makesend Form -->
+                <div id="makesendForm" style="display:none;">
+                    <label for="parcelSize">ขนาดพัสดุ:</label>
+                    <select id="parcelSize" name="parcelSize">
+                        <option value="Envelope">ซอง (ไม่เกิน A3)</option>
+                        <option value="S60">S60 (ไม่เกิน 60 ซม.)</option>
+                        <option value="S80">S80 (ไม่เกิน 80 ซม.)</option>
+                        <option value="S100">S100 (ไม่เกิน 100 ซม.)</option>
+                        <option value="S120">S120 (ไม่เกิน 120 ซม.)</option>
+                        <option value="S140">S140 (ไม่เกิน 140 ซม.)</option>
+                        <option value="S160">S160 (ไม่เกิน 160 ซม.)</option>
+                        <option value="S180">S180 (ไม่เกิน 180 ซม.)</option>
+                        <option value="S200">S200 (ไม่เกิน 200 ซม.)</option>
+                    </select>
+
+                    <label for="makesendDestination">พื้นที่จัดส่ง:</label>
+                    <select id="makesendDestination" name="makesendDestination">
+                        <option value="bangkok">กรุงเทพฯ</option>
+                        <option value="metro">ปริมณฑล</option>
+                        <option value="coolBangkok">COOL กรุงเทพฯ</option>
+                        <option value="coolMetro">COOL ปริมณฑล</option>
+                    </select>
+
+                    <label for="specialArea">พื้นที่พิเศษ:</label>
+                    <select id="specialArea" name="specialArea">
+                        <option value="none">ไม่มีพื้นที่พิเศษ</option>
+                        <option value="saiNoi">ไทรน้อย - นนทบุรี</option>
+                        <option value="ladLumKaeo">ลาดหลุมแก้ว - ปทุมธานี</option>
+                        <option value="nongSuea">หนองเสือ - ปทุมธานี</option>
+                        <option value="bangBo">บางบ่อ - สมุทรปราการ</option>
+                        <option value="bangSaoThong">บางเสาธง - สมุทรปราการ</option>
+                        <option value="muangSamutSakhon">เมืองสมุทรสาคร</option>
+                        <option value="krathumBaen">กระทุ่มแบน - สมุทรสาคร</option>
+                        <option value="muangNakhonPathom">เมืองนครปฐม - นครปฐม</option>
+                    </select>
+                </div>
+
+                <button type="button" class="calculate-btn" onclick="calculateShipping()">คำนวณ</button>
+            </form>
+            <p id="result" class="result-output"></p>
+        </div>
+
+        <!-- Important Shipping Notes -->
+        <div class="info-section-small">
+            <details>
+                <summary><strong>ข้อมูลสำคัญในการขนส่ง</strong></summary>
+                <div class="info-card">
+                    <h3>Inter Express</h3>
+                    <ul>
+                        <li>ทำการ: จันทร์ - เสาร์ 09.00-17.30 น.</li>
+                        <li>ตัดรอบอุณหภูมิ: 14.00 น. (กล่องกระดาษ)</li>
+                        <li>ตัดรอบทั่วไป: 15.30 น. (กล่องโฟม, สินค้าทั่วไป, ด่วน)</li>
+                        <li>พิเศษวันเสาร์: ไม่รับปลายทางเป็นเกาะ/อุณหภูมิทุกชนิด</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>Makesend</h3>
+                    <ul>
+                        <li>ส่งถึงปลายทาง: ไม่เกิน 20.00 น. (ในวันเดียวกัน)</li>
+                        <li>ตัดรอบรับพัสดุ: ไม่เกิน 11.30 น. (จันทร์-เสาร์)</li>
+                        <li>พื้นที่จัดส่ง: กรุงเทพฯ, นนทบุรี, ปทุมธานี, สมุทรปราการ, นครปฐม (อ.เมือง, พุทธมณฑล), สมุทรสาคร (รหัสที่กำหนด)</li>
+                        <li>พื้นที่ที่มีค่าบริการเพิ่ม 30 บาท: ไทรน้อย-นนทบุรี, ลาดหลุมแก้ว-ปทุมธานี, หนองเสือ-ปทุมธานี, บางบ่อ-สมุทรปราการ, บางเสาธง-สมุทรปราการ, เมืองสมุทรสาคร, กระทุ่มแบน-สมุทรสาคร, เมืองนครปฐม</li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

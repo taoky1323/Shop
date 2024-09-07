@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำนวณกำไรสินค้า</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            padding-top: 20px;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 450px;
+            margin-right: 20px;
+        }
+
+        .table-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 500px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #3b82f6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #eee;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #e0f7fa;
+            color: #0077b6;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        td {
+            background-color: #f9fafb;
+            color: #333;
+        }
+
+        tr:hover td {
+            background-color: #e0f7fa;
+            transition: background-color 0.3s ease;
+        }
+
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .table-container {
+                margin-top: 20px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container สำหรับฟอร์ม -->
+    <div class="form-container">
+        <h1>คำนวณกำไรสินค้า</h1>
+        <label for="productName">ชื่อสินค้า (ผลไม้):</label>
+        <input type="text" id="productName" placeholder="เช่น เชอร์รี่" required>
+        
+        <label for="brandName">ยี่ห้อ (ไม่บังคับ):</label>
+        <input type="text" id="brandName" placeholder="เช่น นกแก้ว">
+        
+        <label for="costPrice">ราคาต้นทุน (บาท):</label>
+        <input type="number" id="costPrice" placeholder="เช่น 4000" required>
+        
+        <label for="weightOrQuantity">น้ำหนัก/จำนวน (กิโลกรัมหรือลูก):</label>
+        <input type="number" id="weightOrQuantity" placeholder="เช่น 5" required>
+        
+        <label for="desiredProfit">กำไรที่ต้องการ (%):</label>
+        <input type="number" id="desiredProfit" placeholder="เช่น 50" required>
+        
+        <button onclick="calculateProfit()">คำนวณกำไร</button>
+    </div>
+
+    <!-- Container สำหรับตาราง -->
+    <div class="table-container">
+        <h1>ผลลัพธ์การคำนวณ</h1>
+        <table id="resultTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>ชื่อสินค้า</th>
+                    <th>ยี่ห้อ</th>
+                    <th>ราคาต้นทุน</th>
+                    <th>ราคาขายยกกล่อง</th>
+                    <th>ราคาขายต่อหน่วย</th>
+                </tr>
+            </thead>
+            <tbody id="resultBody"></tbody>
+        </table>
+    </div>
+
+    <!-- อ้างอิงไฟล์ profitscript.js ที่แยกออกมา -->
+    <script src="profitscript.js"></script>
+
+</body>
+</html>
